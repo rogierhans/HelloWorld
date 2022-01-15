@@ -9,6 +9,7 @@ pub struct RRF {
 impl RRF {
     pub fn AddNew(&mut self, h: usize, startCost: f64) {
         let f = f::First(h, startCost, &self.UC);
+        //f.Print();
         self.Fs[h].push(f);
     }
 
@@ -18,7 +19,7 @@ impl RRF {
             let mut f = elem.clone();
             f.NextPoints(&self.UC);
             f.IncreasePoints(t, &self.UC);
-            last_vec.push(f)
+            last_vec.push(f);
         }
         self.Fs.push(last_vec);
     }
@@ -55,6 +56,7 @@ impl RRF {
         self.stop.push(newStop);
         self.AddNew(0, self.UC.StartCost);
         for h in 1..self.UC.TotalTime {
+            //println!("{}",h);
             let mut newStop: Vec<f64> = Vec::new();
             newStop.push(self.GetBestStop(h));
             for t in 1..self.UC.MinDownTime - 1 {
@@ -65,14 +67,13 @@ impl RRF {
                 self.stop[h - 1][self.UC.MinDownTime - 1],
             ));
             self.stop.push(newStop);
-            self.Fs.push(Vec::new());
             self.Update(h);
             let bestStart = f64::min(
                 self.UC.StartCost,
                 self.UC.StartCost + self.stop[h - 1][self.UC.MinDownTime - 1],
             );
             self.AddNew(h, bestStart);
-            
+
         }
 
     }

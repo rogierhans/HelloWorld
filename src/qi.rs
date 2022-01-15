@@ -9,16 +9,16 @@ pub struct QuadraticInterval {
 }
 
 impl QuadraticInterval {
-pub fn print(&self){
-    println!(
-        "[{},{}] ({},{},{}) - {}",
-        self.From, self.To, self.A, self.B, self.C, self.ZID
-    );
-}
+    // pub fn print(&self) {
+    //     println!(
+    //         "[{},{}] ({},{},{}) - {}",
+    //         self.From, self.To, self.A, self.B, self.C, self.ZID
+    //     );
+    // }
 
-    pub fn MinimumHack(&self) -> f64 {
-        -self.B / (2.0 * self.C)
-    }
+    // pub fn MinimumHack(&self) -> f64 {
+    //     -self.B / (2.0 * self.C)
+    // }
     pub fn MinimumAtInterval(&self) -> f64 {
         let minimum = -self.B / (2.0 * self.C);
         //println!("{}",minimum);
@@ -31,51 +31,41 @@ pub fn print(&self){
         }
     }
 
- pub fn MinimumAtIntervalRestricted(&self, max:f64) -> f64
-{
-	let minimum = self.MinimumAtInterval();
-	if max < self.From
-	{
-        panic!("oh no!");
-	}
-	if minimum > max
-    {
-		return max;
-    	}	
-        else
-        {
-		return minimum;
+    pub fn MinimumAtIntervalRestricted(&self, max: f64) -> f64 {
+        let minimum = self.MinimumAtInterval();
+        if max < self.From {
+            panic!("oh no!");
+        }
+        if minimum > max {
+            return max;
+        } else {
+            return minimum;
+        }
     }
+
+    pub fn GetValue(&self, p: f64) -> f64 {
+        self.A + p * self.B + (p * p * self.C)
+    }
+
+    pub fn ValueMinimum(&self) -> f64 {
+        let minimum = self.MinimumAtInterval();
+        return self.GetValue(minimum);
+    }
+
+    pub fn ValueMinimumRestriced(&self, max: f64) -> f64 {
+        let minimum = self.MinimumAtIntervalRestricted(max);
+        return self.GetValue(minimum);
+    }
+
+    // double QuadraticInterval::GetValueInt(double p)
+    // {
+    // 	if (p <= To && From <= To)
+    // 		return A + p * B + (p * p * C);
+    // 	else
+    // 		return  numeric_limits<double>::max();
+    // }
+
+    // void QuadraticInterval::Print() {
+    // 	cout << From << " " << To << " " << A << " " << B << " " << C << " " << endl;
+    // }
 }
-
-pub fn GetValue(&self, p:f64) -> f64
-{
-	self.A + p * self.B + (p * p * self.C)
-}
-
-pub fn ValueMinimum(&self) -> f64
-{
-	let minimum = self.MinimumAtInterval();
-	return self.GetValue(minimum);
-}
-
-pub fn ValueMinimumRestriced(&self , max:f64) -> f64
-{
-	let minimum = self.MinimumAtIntervalRestricted(max);
-	return self.GetValue(minimum);
-}
-
-// double QuadraticInterval::GetValueInt(double p)
-// {
-// 	if (p <= To && From <= To)
-// 		return A + p * B + (p * p * C);
-// 	else
-// 		return  numeric_limits<double>::max();
-// }
-
-// void QuadraticInterval::Print() {
-// 	cout << From << " " << To << " " << A << " " << B << " " << C << " " << endl;
-// }
-}
-
-

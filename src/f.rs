@@ -9,11 +9,11 @@ pub struct F {
 
 
 impl F {
-    pub fn Print(&self) {
-        for elem in self.Intervals.iter() {
-            elem.print();
-        }
-    }
+    // pub fn Print(&self) {
+    //     for elem in self.Intervals.iter() {
+    //         elem.print();
+    //     }
+    // }
     pub fn IncreasePoints(&mut self, t: usize, UC: &suc::SUC) {
         for mut elem in &mut self.Intervals {
             elem.A += UC.A;
@@ -87,7 +87,7 @@ impl F {
         return test;
     }
     pub fn NextPoints(&mut self, UC: &suc::SUC) {
-        self.Print();
+       // self.Print();
 
         let Index = self.GetOptimalNode();
         let pStar = self.Intervals[Index].MinimumAtInterval();

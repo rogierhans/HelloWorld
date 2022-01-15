@@ -33,17 +33,17 @@ pub fn create_suc(filename: impl AsRef<Path>) -> SUC {
 }
 
 impl SUC {
-    pub fn print(&self) {
-        println!(
-            "[{},{}] ({},{},{})",
-            self.pMin, self.pMax, self.A, self.B, self.C
-        );
-        let mut line = String::new();
-        for multipllier in self.BM.iter() {
-            line.push_str(&multipllier.to_string())
-        }
-        println!("{}",line);
-    }
+    // pub fn print(&self) {
+    //     println!(
+    //         "[{},{}] ({},{},{})",
+    //         self.pMin, self.pMax, self.A, self.B, self.C
+    //     );
+    //     let mut line = String::new();
+    //     for multipllier in self.BM.iter() {
+    //         line.push_str(&multipllier.to_string())
+    //     }
+    //     println!("{}",line);
+    // }
 }
 #[derive(Clone)]
 pub struct SUC {
