@@ -9,14 +9,6 @@ pub struct F {
 
 
 impl F {
-    pub fn Create(&self) -> F {
-        let start_index = self.StartIndex.clone();
-        let copiedIntervals: Vec<qi::QuadraticInterval> = self.Intervals.clone();
-        F {
-            StartIndex: start_index,
-            Intervals: copiedIntervals,
-        }
-    }
     pub fn Print(&self) {
         for elem in self.Intervals.iter() {
             elem.print();
@@ -26,6 +18,7 @@ impl F {
         for mut elem in &mut self.Intervals {
             elem.A += UC.A;
             elem.B += -UC.LagrangeMultipliers[t] + UC.B + UC.BM[t];
+            //println!("{} {} {}", -UC.LagrangeMultipliers[t] , UC.B ,UC.BM[t]);
             elem.C += UC.C + UC.CM[t];
         }
     }
@@ -94,6 +87,8 @@ impl F {
         return test;
     }
     pub fn NextPoints(&mut self, UC: &suc::SUC) {
+        self.Print();
+
         let Index = self.GetOptimalNode();
         let pStar = self.Intervals[Index].MinimumAtInterval();
         let To = self.Intervals[Index].To.clone();

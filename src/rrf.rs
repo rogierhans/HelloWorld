@@ -47,12 +47,13 @@ impl RRF {
     // }
     pub fn FillInDP(&mut self) {
         self.Fs.push(Vec::new());
-        self.AddNew(0, self.UC.StartCost);
+
         let mut newStop: Vec<f64> = Vec::new();
         for _ in 0..self.UC.MinDownTime {
             newStop.push(0.0);
         }
         self.stop.push(newStop);
+        self.AddNew(0, self.UC.StartCost);
         for h in 1..self.UC.TotalTime {
             let mut newStop: Vec<f64> = Vec::new();
             newStop.push(self.GetBestStop(h));
@@ -71,7 +72,9 @@ impl RRF {
                 self.UC.StartCost + self.stop[h - 1][self.UC.MinDownTime - 1],
             );
             self.AddNew(h, bestStart);
+            
         }
+
     }
     pub fn GetScore(&mut self) -> f64 {
         self.FillInDP();

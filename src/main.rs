@@ -6,6 +6,7 @@ mod rrf;
 fn main() {
     let filename = "C:\\Users\\Rogier\\OneDrive - Universiteit Utrecht\\1UCTest\\GA10\\0.suc";
     let uc = suc::create_suc(filename);
+   // uc.print();
     let mut rrf = rrf::RRF{
         UC : uc.clone(),
         Fs : Vec::new(),

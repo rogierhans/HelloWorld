@@ -26,20 +26,20 @@ pub fn create_suc(filename: impl AsRef<Path>) -> SUC {
         A: lines[11].parse().unwrap(),
         B: lines[12].parse().unwrap(),
         C: lines[13].parse().unwrap(),
-        LagrangeMultipliers: lines[14].rsplit('\t').map(|c| c.parse().unwrap()).collect(),
-        BM: lines[15].rsplit('\t').map(|c| c.parse().unwrap()).collect(),
-        CM: lines[16].rsplit('\t').map(|c| c.parse().unwrap()).collect(),
+        LagrangeMultipliers: lines[14].split('\t').map(|c| c.parse().unwrap()).collect(),
+        BM: lines[15].split('\t').map(|c| c.parse().unwrap()).collect(),
+        CM: lines[16].split('\t').map(|c| c.parse().unwrap()).collect(),
     }
 }
 
 impl SUC {
-    pub fn print(self) {
+    pub fn print(&self) {
         println!(
             "[{},{}] ({},{},{})",
             self.pMin, self.pMax, self.A, self.B, self.C
         );
         let mut line = String::new();
-        for multipllier in self.LagrangeMultipliers {
+        for multipllier in self.BM.iter() {
             line.push_str(&multipllier.to_string())
         }
         println!("{}",line);
