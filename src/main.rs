@@ -7,14 +7,13 @@ mod suc;
 fn main() {
     let filename = "C:\\Users\\Rogier\\OneDrive - Universiteit Utrecht\\1UCTest\\GA10\\0.suc";
     let uc = suc::create_suc(filename);
-    // uc.print();
     let mut list:Vec<f64> = Vec::new();
     let start = Instant::now();
     for _ in 0..10000 {
         let mut rrf = rrf::RRF {
             UC: uc.clone(),
-            Fs: Vec::new(),
-            stop: Vec::new(),
+            Fs: Vec::with_capacity(uc.TotalTime),
+            stop: Vec::with_capacity(uc.TotalTime),
         };
         let score = rrf.GetScore();
         list.push(score);
