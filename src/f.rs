@@ -1,12 +1,9 @@
-
 use crate::qi;
 use crate::suc;
-#[derive(Clone)]
 pub struct F {
     pub Intervals: Vec<qi::QuadraticInterval>,
     pub StartIndex: usize,
 }
-
 
 impl F {
     // pub fn Print(&self) {
@@ -14,6 +11,13 @@ impl F {
     //         elem.print();
     //     }
     // }
+    pub fn CustomClone(&self) -> F {
+        F {
+            Intervals: self.Intervals.iter().map(|e| e.CustomClone()).collect(),
+            StartIndex : self.StartIndex
+        }
+    }
+
     pub fn IncreasePoints(&mut self, t: usize, UC: &suc::SUC) {
         for mut elem in &mut self.Intervals {
             elem.A += UC.A;
@@ -34,7 +38,8 @@ impl F {
     }
     pub fn GetOptimalNode(&self) -> usize {
         let mut INDEX = 0;
-        while -self.Intervals[INDEX].B > self.Intervals[INDEX].To * 2.0 * self.Intervals[INDEX].C && INDEX < self.Intervals.len() - 1
+        while -self.Intervals[INDEX].B > self.Intervals[INDEX].To * 2.0 * self.Intervals[INDEX].C
+            && INDEX < self.Intervals.len() - 1
         {
             INDEX += 1;
         }
@@ -87,7 +92,7 @@ impl F {
         return test;
     }
     pub fn NextPoints(&mut self, UC: &suc::SUC) {
-       // self.Print();
+        // self.Print();
 
         let Index = self.GetOptimalNode();
         let pStar = self.Intervals[Index].MinimumAtInterval();
@@ -95,14 +100,14 @@ impl F {
         self.Intervals[Index].To = pStar;
         let midInterval = qi::QuadraticInterval {
             From: f64::max(pStar - UC.RampDown, UC.pMin),
-            To: f64::min(pStar + UC.RampUp,UC.pMax),
+            To: f64::min(pStar + UC.RampUp, UC.pMax),
             A: self.Intervals[Index].ValueMinimum(),
-            B:0.0,
-            C:0.0,
-            ZID: self.StartIndex.clone()
+            B: 0.0,
+            C: 0.0,
+            ZID: self.StartIndex.clone(),
         };
-        self.Intervals.insert(Index+1,midInterval);
-        let mut rightInterval = self.Intervals[Index].clone();
+        self.Intervals.insert(Index + 1, midInterval);
+        let mut rightInterval = self.Intervals[Index].CustomClone();
         rightInterval.From = pStar;
         rightInterval.To = To;
         self.Intervals.insert(Index + 2, rightInterval);

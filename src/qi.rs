@@ -1,4 +1,4 @@
-#[derive(Clone)]
+
 pub struct QuadraticInterval {
     pub From: f64,
     pub To: f64,
@@ -19,6 +19,17 @@ impl QuadraticInterval {
     // pub fn MinimumHack(&self) -> f64 {
     //     -self.B / (2.0 * self.C)
     // }
+    pub fn CustomClone(&self) -> QuadraticInterval {
+        QuadraticInterval {
+            From: self.From,
+            To: self.To,
+            A: self.A,
+            B: self.B,
+            C: self.C,
+            ZID: self.ZID,
+        }
+    }
+
     pub fn MinimumAtInterval(&self) -> f64 {
         let minimum = -self.B / (2.0 * self.C);
         //println!("{}",minimum);

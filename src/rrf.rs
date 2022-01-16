@@ -7,16 +7,18 @@ pub struct RRF {
 }
 
 impl RRF {
+
     pub fn AddNew(&mut self, h: usize, startCost: f64) {
         let f = f::First(h, startCost, &self.UC);
         //f.Print();
         self.Fs[h].push(f);
     }
 
+
     pub fn Update(&mut self, t: usize) {
-        let mut last_vec: Vec<f::F> = Vec::new();
+        let mut last_vec: Vec<f::F> = Vec::with_capacity(10);
         for elem in self.Fs[t - 1].iter_mut() {
-            let mut f = elem.clone();
+            let mut f = elem.CustomClone();
             f.NextPoints(&self.UC);
             f.IncreasePoints(t, &self.UC);
             last_vec.push(f);
@@ -32,6 +34,7 @@ impl RRF {
         }
         return bestStop;
     }
+
     pub fn BestValue(&mut self, h: usize) -> f64 {
         let mut bestValue = f64::INFINITY;
         for elem in self.Fs[h].iter() {
